@@ -37,5 +37,19 @@ setUp(() {
       priority: Priority.low,
       dueDate: DateTime.now().add(const Duration(days: 3)),
     );
+    
+    mediumTask = makeTask(
+      id: '2',
+      title: 'Medium Task',
+      priority: Priority.medium,
+      dueDate: DateTime.now().add(const Duration(days: 2)),
+    );
+    
+    highTask = makeTask(
+      id: '3',
+      title: 'High Task',
+      priority: Priority.high,
+      dueDate: DateTime.now().add(const Duration(days: 1)),
+    );
 
 }

@@ -44,12 +44,27 @@ setUp(() {
       priority: Priority.medium,
       dueDate: DateTime.now().add(const Duration(days: 2)),
     );
-    
+
     highTask = makeTask(
       id: '3',
       title: 'High Task',
       priority: Priority.high,
       dueDate: DateTime.now().add(const Duration(days: 1)),
     );
+
+     completedTask = makeTask(
+      id: '4',
+      title: 'Completed Task',
+      dueDate: DateTime.now().subtract(const Duration(days: 1)),
+      isCompleted: true,
+    );
+
+    overdueTask = makeTask(
+      id: '5',
+      title: 'Overdue Task',
+      dueDate: DateTime.now().subtract(const Duration(days: 2)),
+      isCompleted: false,
+    );
+  });
 
 }

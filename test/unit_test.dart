@@ -67,4 +67,32 @@ setUp(() {
     );
   });
 
+  group('Task Model — Constructor & Properties', () {
+    test('stores required constructor values correctly', () {
+      final dueDate = DateTime(2026, 3, 20);
+      final task = Task(id: '101', title: 'Study', dueDate: dueDate);
+
+      expect(task.id, equals('101'));
+      expect(task.title, equals('Study'));
+      expect(task.dueDate, equals(dueDate));
+    });
+
+    test('uses empty string as default description', () {
+      final task = Task(id: '102', title: 'Buy groceries', dueDate: DateTime(2026, 3, 21));
+      expect(task.description, equals(''));
+    });
+
+    test('uses medium as default priority', () {
+      final task = Task(id: '103', title: 'Homework', dueDate: DateTime(2026, 3, 22));
+      expect(task.priority, equals(Priority.medium));
+    });
+
+    test('uses false as default completion state', () {
+      final task = Task(id: '104', title: 'Clean room', dueDate: DateTime(2026, 3, 23));
+      expect(task.isCompleted, isFalse);
+    });
+  });
+
+
+
 }

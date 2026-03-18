@@ -27,4 +27,15 @@ void main() {
       isCompleted: isCompleted,
     );
   }
+
+setUp(() {
+    service = TaskService();
+
+    lowTask = makeTask(
+      id: '1',
+      title: 'Low Task',
+      priority: Priority.low,
+      dueDate: DateTime.now().add(const Duration(days: 3)),
+    );
+
 }

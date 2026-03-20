@@ -138,6 +138,38 @@ setUp(() {
       expect(updated.title, equals('Changed'));
     });
   }); 
+  group('Task Model — isOverdue getter', () {
+    test('returns true when task is incomplete and due date is in the past', () {
+      final task = makeTask(
+        id: '301',
+        title: 'Late',
+        dueDate: DateTime.now().subtract(const Duration(days: 1)),
+      );
 
+      expect(task.isOverdue, isTrue);
+    });
 
+    test('returns false when due date is in the future', () {
+      final task = makeTask(
+        id: '302',
+        title: 'Upcoming',
+        dueDate: DateTime.now().add(const Duration(days: 1)),
+      );
+
+      expect(task.isOverdue, isFalse);
+    });
+
+    test('returns false when task is completed even if past due', () {
+      final task = makeTask(
+        id: '303',
+        title: 'Finished',
+        dueDate: DateTime.now().subtract(const Duration(days: 1)),
+        isCompleted: true,
+      );
+
+      expect(task.isOverdue, isFalse);
+    });
+  });
+
+  
 }

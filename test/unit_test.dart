@@ -287,7 +287,34 @@ setUp(() {
     });
   });
 
-  
+  group('TaskService — sortByDueDate()', () {
+    test('returns tasks sorted by earliest due date first', () {
+      service.addTask(lowTask);
+      service.addTask(highTask);
+      service.addTask(mediumTask);
+
+      final sorted = service.sortByDueDate();
+
+      expect(sorted.map((t) => t.id).toList(), equals([
+        highTask.id,
+        mediumTask.id,
+        lowTask.id,
+      ]));
+    });
+
+    test('does not change original task order after sorting', () {
+      service.addTask(lowTask);
+      service.addTask(highTask);
+
+      final before = service.allTasks.map((t) => t.id).toList();
+      service.sortByDueDate();
+      final after = service.allTasks.map((t) => t.id).toList();
+
+      expect(after, equals(before));
+    });
+  });
+
+
 
 
 

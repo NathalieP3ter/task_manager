@@ -93,6 +93,51 @@ setUp(() {
     });
   });
 
+   group('Task Model — copyWith()', () {
+    test('updates only provided fields during partial update', () {
+      final original = makeTask(
+        id: '201',
+        title: 'Original',
+        description: 'Desc',
+        priority: Priority.low,
+        dueDate: DateTime(2026, 4, 1),
+      );
+
+      final updated = original.copyWith(title: 'Updated');
+
+      expect(updated.title, equals('Updated'));
+      expect(updated.description, equals('Desc'));
+      expect(updated.priority, equals(Priority.low));
+    });
+
+    test('updates all fields during full update', () {
+      final original = makeTask(id: '202', title: 'Old');
+
+      final updated = original.copyWith(
+        id: '203',
+        title: 'New',
+        description: 'New Desc',
+        priority: Priority.high,
+        dueDate: DateTime(2026, 5, 2),
+        isCompleted: true,
+      );
+
+      expect(updated.id, equals('203'));
+      expect(updated.title, equals('New'));
+      expect(updated.description, equals('New Desc'));
+      expect(updated.priority, equals(Priority.high));
+      expect(updated.dueDate, equals(DateTime(2026, 5, 2)));
+      expect(updated.isCompleted, isTrue);
+    });
+
+    test('keeps original task unchanged after copyWith', () {
+      final original = makeTask(id: '204', title: 'Immutable');
+      final updated = original.copyWith(title: 'Changed');
+
+      expect(original.title, equals('Immutable'));
+      expect(updated.title, equals('Changed'));
+    });
+  }); 
 
 
 }

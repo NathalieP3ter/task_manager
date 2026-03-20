@@ -260,6 +260,37 @@ setUp(() {
   });
 
 
+  group('TaskService — sortByPriority()', () {
+    test('returns tasks sorted high to low priority', () {
+      service.addTask(lowTask);
+      service.addTask(highTask);
+      service.addTask(mediumTask);
+
+      final sorted = service.sortByPriority();
+
+      expect(sorted.map((t) => t.priority).toList(), equals([
+        Priority.high,
+        Priority.medium,
+        Priority.low,
+      ]));
+    });
+
+    test('does not change original task order', () {
+      service.addTask(lowTask);
+      service.addTask(highTask);
+
+      final before = service.allTasks.map((t) => t.id).toList();
+      service.sortByPriority();
+      final after = service.allTasks.map((t) => t.id).toList();
+
+      expect(after, equals(before));
+    });
+  });
+
+  
+
+
+
 
   
 }

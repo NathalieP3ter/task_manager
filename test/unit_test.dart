@@ -171,5 +171,43 @@ setUp(() {
     });
   });
 
+   group('Task Model — toJson() / fromJson()', () {
+    test('preserves values in serialization round-trip', () {
+      final original = makeTask(
+        id: '401',
+        title: 'Serialize',
+        description: 'Round trip',
+        priority: Priority.high,
+        dueDate: DateTime(2026, 6, 10),
+        isCompleted: true,
+      );
+
+      final restored = Task.fromJson(original.toJson());
+
+      expect(restored.id, equals(original.id));
+      expect(restored.title, equals(original.title));
+      expect(restored.priority, equals(original.priority));
+      expect(restored.isCompleted, equals(original.isCompleted));
+    });
+
+    test('produces expected json field types', () {
+      final json = makeTask(id: '402', title: 'Field Types').toJson();
+
+      expect(json['id'], isA<String>());
+      expect(json['priority'], isA<int>());
+      expect(json['dueDate'], isA<String>());
+    });
+
+    test('stores and restores priority using enum index', () {
+      final task = makeTask(id: '403', title: 'Priority', priority: Priority.high);
+      final json = task.toJson();
+
+      expect(json['priority'], equals(Priority.high.index));
+      expect(Task.fromJson(json).priority, equals(Priority.high));
+    });
+  });
+
+
+  
   
 }

@@ -207,7 +207,59 @@ setUp(() {
     });
   });
 
+   group('TaskService — deleteTask()', () {
+    test('deletes an existing task', () {
+      service.addTask(lowTask);
+      service.deleteTask(lowTask.id);
 
-  
+      expect(service.allTasks.any((t) => t.id == lowTask.id), isFalse);
+    });
+
+    test('does nothing when deleting a non-existent id', () {
+      service.addTask(lowTask);
+      service.deleteTask('missing');
+
+      expect(service.allTasks.length, equals(1));
+    });
+  });
+
+  group('TaskService — toggleComplete()', () {
+    test('changes completion from false to true', () {
+      service.addTask(lowTask);
+      service.toggleComplete(lowTask.id);
+
+      expect(service.allTasks.first.isCompleted, isTrue);
+    });
+
+    test('changes completion from true to false', () {
+      service.addTask(completedTask);
+      service.toggleComplete(completedTask.id);
+
+      expect(service.allTasks.first.isCompleted, isFalse);
+    });
+
+    test('throws StateError for unknown id', () {
+      expect(() => service.toggleComplete('unknown'), throwsA(isA<StateError>()));
+    });
+  });
+
+  group('TaskService — getByStatus()', () {
+    test('returns only active tasks', () {
+      service.addTask(lowTask);
+      service.addTask(completedTask);
+
+      expect(service.getByStatus(completed: false).length, equals(1));
+    });
+
+    test('returns only completed tasks', () {
+      service.addTask(lowTask);
+      service.addTask(completedTask);
+
+      expect(service.getByStatus(completed: true).length, equals(1));
+    });
+  });
+
+
+
   
 }

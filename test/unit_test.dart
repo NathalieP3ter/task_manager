@@ -314,6 +314,35 @@ setUp(() {
     });
   });
 
+   group('TaskService — statistics getter', () {
+    test('returns zero counts for empty service', () {
+      final stats = service.statistics;
+
+      expect(stats['total'], equals(0));
+      expect(stats['completed'], equals(0));
+      expect(stats['overdue'], equals(0));
+    });
+
+    test('returns correct total and completed counts for mixed tasks', () {
+      service.addTask(lowTask);
+      service.addTask(highTask);
+      service.addTask(completedTask);
+
+      final stats = service.statistics;
+
+      expect(stats['total'], equals(3));
+      expect(stats['completed'], equals(1));
+    });
+
+    test('counts only incomplete past-due tasks as overdue', () {
+      service.addTask(overdueTask);
+      service.addTask(completedTask);
+
+      expect(service.statistics['overdue'], equals(1));
+    });
+  });
+
+
 
 
 

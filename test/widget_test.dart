@@ -18,5 +18,12 @@ void main() {
     );
   }
 
+  testWidgets('shows empty state when no tasks exist', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp());
+
+    expect(find.text('No tasks yet. Tap + to add one!'), findsOneWidget);
+  });
+
+
   
 }

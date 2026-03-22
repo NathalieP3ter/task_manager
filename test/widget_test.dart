@@ -33,8 +33,23 @@ void main() {
     expect(find.text('Add Task'), findsOneWidget);
   });
 
+  testWidgets('adds a new task and displays it in list', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp());
 
+    // Open Add Task screen
+    await tester.tap(find.byKey(const Key('add_task_fab')));
+    await tester.pumpAndSettle();
 
+    // Enter title
+    await tester.enterText(find.byKey(const Key('title_field')), 'Test Task');
+
+    // Submit
+    await tester.tap(find.byKey(const Key('submit_btn')));
+    await tester.pumpAndSettle();
+
+    // Check if task appears
+    expect(find.text('Test Task'), findsOneWidget);
+  });
 
   
 }

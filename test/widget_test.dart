@@ -72,5 +72,24 @@ void main() {
     expect(cb.value, isTrue);
   });
 
+ testWidgets('deletes a task when delete button is tapped', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp());
+
+    // Add task first
+    await tester.tap(find.byKey(const Key('add_task_fab')));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('title_field')), 'Delete Me');
+    await tester.tap(find.byKey(const Key('submit_btn')));
+    await tester.pumpAndSettle();
+
+    // Delete task
+    await tester.tap(find.byIcon(Icons.delete));
+    await tester.pumpAndSettle();
+
+    // Task should be gone
+    expect(find.text('Delete Me'), findsNothing);
+  });
+
   
 }

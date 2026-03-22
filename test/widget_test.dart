@@ -24,6 +24,17 @@ void main() {
     expect(find.text('No tasks yet. Tap + to add one!'), findsOneWidget);
   });
 
+  testWidgets('navigates to Add Task screen when FAB is tapped', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp());
+
+    await tester.tap(find.byKey(const Key('add_task_fab')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add Task'), findsOneWidget);
+  });
+
+
+
 
   
 }

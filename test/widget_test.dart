@@ -51,5 +51,26 @@ void main() {
     expect(find.text('Test Task'), findsOneWidget);
   });
 
+   testWidgets('toggles task completion when checkbox is tapped', (WidgetTester tester) async {
+    await tester.pumpWidget(createTestApp());
+
+    // Add task first
+    await tester.tap(find.byKey(const Key('add_task_fab')));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('title_field')), 'Toggle Task');
+    await tester.tap(find.byKey(const Key('submit_btn')));
+    await tester.pumpAndSettle();
+
+    // Tap checkbox
+    final checkbox = find.byType(Checkbox);
+    await tester.tap(checkbox);
+    await tester.pump();
+
+    // Checkbox should now be checked
+    Checkbox cb = tester.widget(checkbox);
+    expect(cb.value, isTrue);
+  });
+
   
 }
